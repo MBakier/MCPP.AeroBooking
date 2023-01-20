@@ -1,5 +1,5 @@
 
-namespace MCPP.AeroBooking
+namespace MCPP.AeroBooking.WebApi
 {
     public class Program
     {
