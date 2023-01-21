@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPP.AeroBooking.WebApi", "MCPP.AeroBooking.WebApi\MCPP.AeroBooking.WebApi.csproj", "{F5D412F6-3F18-4799-A498-A363F10E0F92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPP.AeroBooking.WebApi", "..\MCPP.AeroBooking.WebApi\MCPP.AeroBooking.WebApi.csproj", "{861E43C9-8DE0-4350-8460-7C54E81CBB92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F5D412F6-3F18-4799-A498-A363F10E0F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5D412F6-3F18-4799-A498-A363F10E0F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5D412F6-3F18-4799-A498-A363F10E0F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5D412F6-3F18-4799-A498-A363F10E0F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861E43C9-8DE0-4350-8460-7C54E81CBB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861E43C9-8DE0-4350-8460-7C54E81CBB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861E43C9-8DE0-4350-8460-7C54E81CBB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861E43C9-8DE0-4350-8460-7C54E81CBB92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {424CD55E-BFAC-4577-9B56-314A1425A061}
+		SolutionGuid = {B8EC5985-CCCD-401F-B3B5-10A736245AD3}
 	EndGlobalSection
 EndGlobal
