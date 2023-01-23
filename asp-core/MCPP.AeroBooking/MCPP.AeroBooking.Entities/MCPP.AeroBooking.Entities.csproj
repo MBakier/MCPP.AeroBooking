@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MCPP.AeroBooking.Utilities\MCPP.AeroBooking.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>
