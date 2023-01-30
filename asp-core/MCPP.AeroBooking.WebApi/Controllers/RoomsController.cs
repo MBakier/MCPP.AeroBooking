@@ -14,14 +14,18 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
+        #region Data and Const
+
+        // Add AutoMapper here
         private readonly ApplicationDbContext _context;
 
         public RoomsController(ApplicationDbContext context)
         {
             _context = context;
         }
+        #endregion
 
-        // GET: api/Rooms
+        #region Services
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
@@ -32,7 +36,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return await _context.Rooms.ToListAsync();
         }
 
-        // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
@@ -50,8 +53,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return room;
         }
 
-        // PUT: api/Rooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
@@ -81,8 +82,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Rooms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
@@ -96,7 +95,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);
         }
 
-        // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
@@ -115,10 +113,13 @@ namespace MCPP.AeroBooking.WebApi.Controllers
 
             return NoContent();
         }
+        #endregion
 
+        #region Private
         private bool RoomExists(int id)
         {
             return (_context.Rooms?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        #endregion
     }
 }

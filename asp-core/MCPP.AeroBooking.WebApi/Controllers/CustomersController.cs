@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
+using AutoMapper;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -14,14 +15,19 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        #region Data and Const
 
-        public CustomersController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public CustomersController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
+        #endregion
 
-        // GET: api/Customers
+        #region Services
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
@@ -32,7 +38,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return await _context.Customers.ToListAsync();
         }
 
-        // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
@@ -50,8 +55,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return customer;
         }
 
-        // PUT: api/Customers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
         {
@@ -81,8 +84,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Customers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
@@ -96,7 +97,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
         }
 
-        // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
@@ -115,10 +115,13 @@ namespace MCPP.AeroBooking.WebApi.Controllers
 
             return NoContent();
         }
+        #endregion
 
+        #region Private
         private bool CustomerExists(int id)
         {
             return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        #endregion
     }
 }

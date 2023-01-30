@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
+using AutoMapper;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -14,25 +15,31 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        #region Data and Const
 
-        public BookingsController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+
+        public BookingsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
+        #endregion
 
-        // GET: api/Bookings
+        #region Services
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<BookingListDto>>> GetBookings()
         {
-          if (_context.Bookings == null)
-          {
-              return NotFound();
-          }
-            return await _context.Bookings.ToListAsync();
+            var bookings = await _context
+                                      .Bookings
+                                      .Include(b => b.Hotel)
+                                      .Include(b => b.Customer)
+                                      .ToListAsync();
+            var bookingDtos = _mapper.Map<List<BookingListDto>>(bookings);
         }
 
-        // GET: api/Bookings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Booking>> GetBooking(int id)
         {

@@ -14,14 +14,18 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
+        #region Data and Const
+
+        // Add AutoMapper here
         private readonly ApplicationDbContext _context;
 
         public HotelsController(ApplicationDbContext context)
         {
             _context = context;
         }
+        #endregion
 
-        // GET: api/Hotels
+        #region Services
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
         {
@@ -32,7 +36,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return await _context.Hotels.ToListAsync();
         }
 
-        // GET: api/Hotels/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
@@ -50,8 +53,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return hotel;
         }
 
-        // PUT: api/Hotels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHotel(int id, Hotel hotel)
         {
@@ -81,8 +82,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Hotels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
@@ -96,7 +95,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
         }
 
-        // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
@@ -115,10 +113,13 @@ namespace MCPP.AeroBooking.WebApi.Controllers
 
             return NoContent();
         }
+        #endregion
 
+        #region Private
         private bool HotelExists(int id)
         {
             return (_context.Hotels?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        #endregion
     }
 }
