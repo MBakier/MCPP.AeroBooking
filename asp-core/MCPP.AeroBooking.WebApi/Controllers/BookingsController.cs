@@ -28,16 +28,14 @@ namespace MCPP.AeroBooking.WebApi.Controllers
         #endregion
 
         #region Services
-
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookingListDto>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            var bookings = await _context
-                                      .Bookings
-                                      .Include(b => b.Hotel)
-                                      .Include(b => b.Customer)
-                                      .ToListAsync();
-            var bookingDtos = _mapper.Map<List<BookingListDto>>(bookings);
+          if (_context.Bookings == null)
+          {
+              return NotFound();
+          }
+            return await _context.Bookings.ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -57,8 +55,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return booking;
         }
 
-        // PUT: api/Bookings/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBooking(int id, Booking booking)
         {
@@ -88,8 +84,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Bookings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(Booking booking)
         {
@@ -103,7 +97,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
         }
 
-        // DELETE: api/Bookings/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
@@ -122,10 +115,13 @@ namespace MCPP.AeroBooking.WebApi.Controllers
 
             return NoContent();
         }
+        #endregion
 
+        #region Private
         private bool BookingExists(int id)
         {
             return (_context.Bookings?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        #endregion
     }
 }
