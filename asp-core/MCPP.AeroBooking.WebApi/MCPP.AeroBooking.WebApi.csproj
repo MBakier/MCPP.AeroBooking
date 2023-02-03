@@ -22,4 +22,8 @@
     <ProjectReference Include="..\MCPP.AeroBooking\MCPP.AeroBooking.EfCore\MCPP.AeroBooking.EfCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapperProfiles\" />
+  </ItemGroup>
+
 </Project>
