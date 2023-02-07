@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Customers\" />
-    <Folder Include="Hotels\" />
     <Folder Include="Rooms\" />
   </ItemGroup>
 

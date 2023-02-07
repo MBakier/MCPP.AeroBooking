@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MCPP.AeroBooking.Dtos.Bookings
 {
-    public class BookingListDto
+    public class BookingDto
     {
         public int Id { get; set; }
         public string Location { get; set; }
