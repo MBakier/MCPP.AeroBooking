@@ -19,11 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MCPP.AeroBooking\MCPP.AeroBooking.Dtos\MCPP.AeroBooking.Dtos.csproj" />
     <ProjectReference Include="..\MCPP.AeroBooking\MCPP.AeroBooking.EfCore\MCPP.AeroBooking.EfCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AutoMapperProfiles\" />
   </ItemGroup>
 
 </Project>

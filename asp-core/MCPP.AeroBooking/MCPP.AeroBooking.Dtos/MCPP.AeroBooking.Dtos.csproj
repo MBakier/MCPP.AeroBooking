@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Rooms\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MCPP.AeroBooking.Entities\MCPP.AeroBooking.Entities.csproj" />
     <ProjectReference Include="..\MCPP.AeroBooking.Utilities\MCPP.AeroBooking.Utilities.csproj" />
   </ItemGroup>

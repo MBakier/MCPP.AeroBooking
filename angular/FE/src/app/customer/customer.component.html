@@ -1,1 +1,45 @@
-<p>customer works!</p>
+<h2>Customers</h2>
+<hr>
+<button class="mb-3" mat-raised-button color="primary" [routerLink]="['/customers/create']">Create New Customer</button>
+
+
+<div class="position-relative">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td>{{ gender[customer.gender] }}</td>
+        <td>{{ customer.age }}</td>
+        <td class="pb-0 mb-0">
+          <a class="me-2 text-info" [routerLink]="['/customers/details', customer.id]">
+            <mat-icon fontIcon="info_outline"></mat-icon>
+          </a>
+          <a class="me-2" [routerLink]="['/customers/edit', customer.id]">
+            <mat-icon fontIcon="edit"></mat-icon>
+          </a>
+          <a class="pointer text-danger" (click)="deleteCustomer(customer.id)">
+            <mat-icon fontIcon="delete"></mat-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spin-wrap" *ngIf="showSpinner">
+    <mat-spinner class="position-absolute top-50 start-50 translate-middle"></mat-spinner>
+  </div>
+
+</div>

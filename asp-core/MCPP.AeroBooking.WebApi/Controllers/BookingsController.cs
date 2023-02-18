@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
 using AutoMapper;
+using MCPP.AeroBooking.Dtos.Bookings;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -29,30 +25,38 @@ namespace MCPP.AeroBooking.WebApi.Controllers
 
         #region Services
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<BookingListDto>>> GetBookings()
         {
-          if (_context.Bookings == null)
-          {
-              return NotFound();
-          }
-            return await _context.Bookings.ToListAsync();
+            var bookings = await _context
+                                      .Bookings
+                                      .Include(b => b.Hotel)
+                                      .Include(b => b.Room)
+                                      .Include(b => b.Customer)
+                                      .ToListAsync();
+
+            var bookingDtos = _mapper.Map<List<BookingListDto>>(bookings);
+
+            return bookingDtos;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Booking>> GetBooking(int id)
+        public async Task<ActionResult<BookingDetailsDto>> GetBooking(int id)
         {
-          if (_context.Bookings == null)
-          {
-              return NotFound();
-          }
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _context
+                                    .Bookings
+                                    .Include(b => b.Hotel)
+                                    .Include(b => b.Room)
+                                    .Include(b => b.Customer)
+                                    .SingleOrDefaultAsync(b => b.Id == id);
 
             if (booking == null)
             {
                 return NotFound();
             }
 
-            return booking;
+            var bookingDetailsDto = _mapper.Map<BookingDetailsDto>(booking);
+
+            return bookingDetailsDto;
         }
 
         [HttpPut("{id}")]

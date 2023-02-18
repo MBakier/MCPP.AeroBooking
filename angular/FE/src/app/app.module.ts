@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerComponent } from './customer/customer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 import { HotelComponent } from './hotel/hotel.component';
 import { BookingComponent } from './booking/booking.component';
 import { RoomComponent } from './room/room.component';
@@ -25,6 +26,7 @@ import { RoomComponent } from './room/room.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
