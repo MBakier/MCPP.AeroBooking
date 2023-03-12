@@ -11,6 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HotelComponent } from './hotel/hotel.component';
 import { BookingComponent } from './booking/booking.component';
 import { RoomComponent } from './room/room.component';
+import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { DeleteCustomerComponent } from './customer/delete-customer/delete-customer.component';
+import { AddEditCustomerComponent } from './customer/add-edit-customer/add-edit-customer.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,14 +25,20 @@ import { RoomComponent } from './room/room.component';
     HomeComponent,
     HotelComponent,
     BookingComponent,
-    RoomComponent
+    RoomComponent,
+    CustomerDetailsComponent,
+    NotFoundComponent,
+    DeleteCustomerComponent,
+    AddEditCustomerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NgbModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
