@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer } from 'src/app/models/customer.model';
-import { CustomerService } from 'src/app/services/customer.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Customer } from 'app/models/customer.model';
+import { CustomerService } from 'app/ services/customer.service';
 
 @Component({
   selector: 'app-customer-details',
@@ -30,12 +30,6 @@ export class CustomerDetailsComponent implements OnInit {
     if (customerId) {
 
       this.CustomerSvc.getCustomer(customerId).subscribe({
-        next: (customerFromApi) => {
-          this.customer = customerFromApi;
-          
-          /** if(customerFromApi.images) {
-           this.images = customerFromApi.images; } */
-        },
         error: (e: HttpErrorResponse) => {
           console.log(e);
           this.router.navigate(['not-found']);

@@ -8,6 +8,7 @@ export interface Customer {
   dob: string;
   age: number;
   fullName: string;
-  phoneNumber: string;
+  phone: string;
+  email: string;
 }
 

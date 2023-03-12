@@ -30,7 +30,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             var bookings = await _context
                                       .Bookings
                                       .Include(b => b.Hotel)
-                                      .Include(b => b.Room)
                                       .Include(b => b.Customer)
                                       .ToListAsync();
 
@@ -45,7 +44,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             var booking = await _context
                                     .Bookings
                                     .Include(b => b.Hotel)
-                                    .Include(b => b.Room)
                                     .Include(b => b.Customer)
                                     .SingleOrDefaultAsync(b => b.Id == id);
 

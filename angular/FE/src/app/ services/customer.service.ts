@@ -12,11 +12,11 @@ export class CustomerService {
 
   getCustomers(): Observable<Customer[]> {
 
-    return this.http.get<Customer[]>(`${this.apiUrl}/GetCustomers`);
+    return this.http.get<Customer[]>(`/GetCustomers`);
   }
   
   getCustomer(id: number): Observable<Customer> {
 
-    return this.http.get<Customer>(`${this.apiUrl}/GetCustomer/${id}`);
+    return this.http.get<Customer>(`/GetCustomer/${id}`);
   }
 }
