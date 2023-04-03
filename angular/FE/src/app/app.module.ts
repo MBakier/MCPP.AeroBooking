@@ -17,6 +17,11 @@ import { DeleteCustomerComponent } from './customer/delete-customer/delete-custo
 import { AddEditCustomerComponent } from './customer/add-edit-customer/add-edit-customer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { AddEditBookingComponent } from './booking/add-edit-booking/add-edit-booking.component';
+import { BookingDetailsComponent } from './booking/booking-details/booking-details.component';
+import { AddEditRoomComponent } from './room/add-edit-room/add-edit-room.component';
+import { RoomDetailsComponent } from './room/room-details/room-details.component';
+import { DeleteRoomComponent } from './room/delete-room/delete-room.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,13 @@ import { SharedModule } from './shared/shared.module';
     CustomerDetailsComponent,
     NotFoundComponent,
     DeleteCustomerComponent,
-    AddEditCustomerComponent
+    AddEditCustomerComponent,
+    AddEditBookingComponent,
+    BookingDetailsComponent,
+    AddEditRoomComponent,
+    RoomDetailsComponent,
+    DeleteRoomComponent
+    
   ],
   imports: [
     BrowserModule,

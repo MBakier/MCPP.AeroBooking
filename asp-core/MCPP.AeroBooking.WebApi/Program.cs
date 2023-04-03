@@ -1,4 +1,5 @@
 
+using FluentValidation;
 using MCPP.AeroBooking.EfCore;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,12 @@ namespace MCPP.AeroBooking.WebApi
 
             // Register all AutoMapper profiles
             builder.Services.AddAutoMapper(typeof(Program));
+
+
+            // Register all FluentValidation validator 
+            //builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("AeroBookingAppConnection")));

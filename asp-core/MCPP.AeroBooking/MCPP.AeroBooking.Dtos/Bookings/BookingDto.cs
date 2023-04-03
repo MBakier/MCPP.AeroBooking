@@ -15,7 +15,6 @@ namespace MCPP.AeroBooking.Dtos.Bookings
         public DateTime BookingEnd { get; set; }
         public int NumberOfAdults { get; set; }
         public int NumberOfChildren { get; set; }
-        public AeroPlaneClass AeroPlaneClass { get; set; }
 
         public int HotelId { get; set; }
         public int CustomerId { get; set; }

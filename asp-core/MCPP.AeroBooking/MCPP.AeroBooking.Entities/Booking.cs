@@ -17,7 +17,6 @@ namespace MCPP.AeroBooking.Entities
         public double TotalPrice { get; set; }
         public int NumberOfAdults { get; set; }
         public int NumberOfChildren { get; set; }
-        public AeroPlaneClass AeroPlaneClass { get; set; }
 
         [NotMapped]
         public int NumberOfDays

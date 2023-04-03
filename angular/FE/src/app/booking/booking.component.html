@@ -1,1 +1,39 @@
-<p>booking works!</p>
+<h2>Bookings</h2>
+<hr>
+<button class="mb-3" mat-raised-button color="primary" [routerLink]="['/bookings/create']">Create New Booking</button>
+
+<div class="position-relative">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Booking #</th>
+        <th>Customer</th>
+        <th>Hotel</th>
+        <th>Days</th>
+        <th>Total Price</th>
+        <th>Occupants</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.id }}</td>
+        <td>{{ booking.customerFullName }}</td>
+        <td>{{ booking.HotelName }}</td>
+        <td>{{ booking.numberOfDays }}</td>
+        <td>{{ booking.totalPrice | currency: "JOD ":"symbol"}}</td>
+        <td>{{ booking.numberOfOccupants }}</td>
+        <td class="pb-0 mb-0">
+          <a class="me-2 text-info" [routerLink]="['/bookings/details', booking.id]">
+            <mat-icon fontIcon="info_outline"></mat-icon>
+          </a>
+          <a class="me-2" [routerLink]="['/bookings/edit', booking.id]">
+            <mat-icon fontIcon="edit"></mat-icon>
+          </a>
+          <a class="pointer text-danger" (click)="deleteBooking(booking)">
+            <mat-icon fontIcon="delete"></mat-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>

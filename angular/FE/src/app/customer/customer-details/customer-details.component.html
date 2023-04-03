@@ -1,1 +1,39 @@
-<p>customer-details works!</p>
+<h1>Customer: <span class="text-primary">{{customer?.fullName}}</span> details</h1>
+<hr>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-4">Id</div>
+      <div class="col-md-8">{{customer?.id}}</div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-4">Name</div>
+      <div class="col-md-8">{{customer?.fullName}}</div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">Email</div>
+        <div class="col-md-8">{{email?.email}}</div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-4">Phone</div>
+        <div class="col-md-8">{{Phone.phone}}</div>
+      </div>
+
+    <div class="row mt-3">
+      <div class="col-md-4">Age</div>
+      <div class="col-md-8">{{customer?.age}}</div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-4">Gender</div>
+      <div class="col-md-8" *ngIf="customer">{{gender[customer.gender]}}</div>
+    </div>
+
+<div class="mt-3">
+  <button class="me-2" mat-stroked-button color="basic" [routerLink]="['/customers']">Back</button>
+  <button mat-flat-button color="primary" [routerLink]="['/customers/edit', customer?.id]">Edit</button>
+</div>

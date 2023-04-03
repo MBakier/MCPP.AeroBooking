@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Customer } from 'app/models/customer.model';
-import { CustomerService } from 'app/ services/customer.service';
+import { CustomerService } from 'app/services/customer.service';
+import { Gender } from 'app/enums/gender.enum';
 
 @Component({
   selector: 'app-customer-details',
@@ -11,7 +12,8 @@ import { CustomerService } from 'app/ services/customer.service';
 })
 export class CustomerDetailsComponent implements OnInit {
 
-  customer!: Customer;
+  customer?: Customer;
+  gender = Gender;
 
   constructor(
     private CustomerSvc: CustomerService,

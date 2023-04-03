@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CustomerService } from '../ services/customer.service';
+import { CustomerService } from '../services/customer.service';
 import { Gender } from '../enums/gender.enum';
 import { Customer } from '../models/customer.model';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';

@@ -1,4 +1,5 @@
-﻿using MCPP.AeroBooking.Entities;
+﻿using MCPP.AeroBooking.Dtos.Rooms;
+using MCPP.AeroBooking.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
