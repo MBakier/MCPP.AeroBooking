@@ -44,4 +44,9 @@ export class BookingService {
 
     return this.http.delete<Booking>(`${this.apiUrl}/DeleteBooking/${id}`);
   }
+  
+  getBookingPrice(roomId: number, bookingStart: string, bookingEnd: string): Observable<number> {
+
+    return this.http.get<number>(`${this.apiUrl}/GetBookingPrice?roomId=${roomId}&bookingStart=${bookingStart}&bookingEnd=${bookingEnd}`);
+  }
 }

@@ -1,0 +1,42 @@
+<h1>Hotel: <span class="text-primary">{{hotel.name}}</span> details</h1>
+<hr>
+<div class="row">
+  <div class="col-md-2">Name</div>
+  <div class="col-md-10">{{hotel.name}}</div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-2">Address</div>
+  <div class="col-md-10">{{hotel.address}}</div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-2">Rating</div>
+  <div class="col-md-10">{{hotel.rating}}</div>
+</div>
+
+<div class="mt-4">
+  <button class="me-2" mat-raised-button color="basic" [routerLink]="['/hotels']">Back</button>
+  <button mat-raised-button color="primary" [routerLink]="['/hotels/edit/', hotelId]">Edit</button>
+</div>
+
+<hr class="mt-5">
+<h2>Hotel Rooms</h2>
+<table class="table table-stripped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Number Of Occupants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let room of hotel.rooms">
+      <td>{{ room.id }}</td>
+      <td>{{ room.name }}</td>
+      <td>{{ room.price }}</td>
+      <td>{{ room.numberOfOccupants }}</td>
+    </tr>
+  </tbody>
+</table>

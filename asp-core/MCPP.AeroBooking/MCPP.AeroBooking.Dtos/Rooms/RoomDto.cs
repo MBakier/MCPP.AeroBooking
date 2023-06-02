@@ -16,7 +16,7 @@ namespace MCPP.AeroBooking.Dtos.Rooms
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
+        public string HotelName { get; set; }
         public int NumberOfOccupants { get; set; }
         public double Price { get; set; }
         public bool IsBooked { get; set; }

@@ -1,13 +1,13 @@
 <h1>
-    <span *ngIf="pageMode == pageModeEnum.Create">Add Room</span>
+    <span *ngIf="pageMode == pageModeEnum.Create">Add Hotel</span>
     <span *ngIf="pageMode == pageModeEnum.Edit">
-      <span>Edit Room </span>
-      <span class="text-primary">{{ room.name }}</span>
+      <span>Edit Hotel </span>
+      <span class="text-primary">{{ hotel.name }}</span>
     </span>
   </h1>
 <hr>
   
-<form [formGroup]="roomForm" (ngSubmit)="submitForm()">
+<form [formGroup]="hotelForm" (ngSubmit)="submitForm()">
     
     <div class="row mt-3">
       <div class="col-md-6">
@@ -16,6 +16,7 @@
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" required>
             <mat-error>Name is required</mat-error>
+            <mat-error *ngIf="hotelNameExists">{{hotelNameExistsMessage}}</mat-error>
           </mat-form-field>
         </div>
   
@@ -29,19 +30,23 @@
   
         <div class="">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Price</mat-label>
-            <input matInput formControlName="price" required>
-            <mat-error>Price is required</mat-error>
+            <mat-label>Rating</mat-label>
+            <input matInput formControlName="rating" required>
+            <mat-error>Rating is required</mat-error>
           </mat-form-field>
         </div>
 
-        <div class="">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>numberOfOccupants</mat-label>
-              <input matInput formControlName="numberOfOccupants" required>
-              <mat-error>Number Of Occupants is required</mat-error>
-            </mat-form-field>
-          </div>
+     <div class="col-md-6">
+
+
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Rooms</mat-label>
+            <mat-select formControlName="roomIds" multiple>
+              <mat-option *ngFor="let room of roomsLookup" [value]="room.value">{{room.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+      </div>
 
     </div>
   

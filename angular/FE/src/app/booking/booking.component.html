@@ -12,7 +12,6 @@
         <th>Hotel</th>
         <th>Days</th>
         <th>Total Price</th>
-        <th>Occupants</th>
       </tr>
     </thead>
     <tbody>
@@ -22,7 +21,6 @@
         <td>{{ booking.HotelName }}</td>
         <td>{{ booking.numberOfDays }}</td>
         <td>{{ booking.totalPrice | currency: "JOD ":"symbol"}}</td>
-        <td>{{ booking.numberOfOccupants }}</td>
         <td class="pb-0 mb-0">
           <a class="me-2 text-info" [routerLink]="['/bookings/details', booking.id]">
             <mat-icon fontIcon="info_outline"></mat-icon>

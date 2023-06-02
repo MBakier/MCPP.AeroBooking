@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer.model';
+import { Lookup } from 'app/models/lookup.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-
+  
   apiUrl = `${environment.apiUrl}/Customers`;
 
   constructor(private http: HttpClient) { }
@@ -38,10 +39,10 @@ export class CustomerService {
     return this.http.delete<Customer>(`${this.apiUrl}/DeleteCustomer/${id}`)
   }
 
-  /* getCustomerLookup(): Observable<Lookup[]> {
+  getCustomerLookup(): Observable<Lookup[]> {
 
     return this.http.get<Lookup[]>(`${this.apiUrl}/GetLookup`);
-  } */
+  }
 
 }
 

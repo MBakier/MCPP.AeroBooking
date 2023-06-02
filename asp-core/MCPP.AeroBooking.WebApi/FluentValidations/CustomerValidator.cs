@@ -14,3 +14,4 @@ namespace MCPP.AeroBooking.WebApi.FluentValidations
             RuleFor(x => x.DOB).NotNull();
         }
     }
+}

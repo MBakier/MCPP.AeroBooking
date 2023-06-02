@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BookingList } from 'src/app/models/booking/bookingList.model';
+import { BookingList } from 'app/models/booking/bookingList.model';
 
 @Component({
   selector: 'app-delete-booking',

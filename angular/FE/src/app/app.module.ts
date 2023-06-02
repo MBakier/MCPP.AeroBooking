@@ -22,6 +22,9 @@ import { BookingDetailsComponent } from './booking/booking-details/booking-detai
 import { AddEditRoomComponent } from './room/add-edit-room/add-edit-room.component';
 import { RoomDetailsComponent } from './room/room-details/room-details.component';
 import { DeleteRoomComponent } from './room/delete-room/delete-room.component';
+import { AddEditHotelComponent } from './hotel/add-edit-hotel/add-edit-hotel.component';
+import { DeleteHotelComponent } from './hotel/delete-hotel/delete-hotel.component';
+import { HotelDetailsComponent } from './hotel/hotel-details/hotel-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { DeleteRoomComponent } from './room/delete-room/delete-room.component';
     BookingDetailsComponent,
     AddEditRoomComponent,
     RoomDetailsComponent,
-    DeleteRoomComponent
+    DeleteRoomComponent,
+    AddEditHotelComponent,
+    DeleteHotelComponent,
+    HotelDetailsComponent
     
   ],
   imports: [

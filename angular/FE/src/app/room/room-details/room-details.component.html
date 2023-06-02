@@ -1,1 +1,23 @@
-<p>room-details works!</p>
+<h1>Room: <span class="text-primary">{{room.name}}</span> details</h1>
+<hr>
+<div class="row">
+  <div class="col-md-2">Name</div>
+  <div class="col-md-10">{{room.name}}</div>
+</div>
+<div class="row mt-3">
+  <div class="col-md-2">Address</div>
+  <div class="col-md-10">{{room.address}}</div>
+</div>
+<div class="row mt-3">
+  <div class="col-md-2">Price</div>
+  <div class="col-md-10">{{room.price}}</div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-2">numberOfOccupants</div>
+    <div class="col-md-10">{{room.numberOfOccupants}}</div>
+  </div>
+
+<div class="mt-4">
+  <button class="me-2" mat-raised-button color="basic" [routerLink]="['/rooms']">Back</button>
+  <button mat-raised-button color="primary" [routerLink]="['/rooms/edit/', roomId]">Edit</button>
+</div>

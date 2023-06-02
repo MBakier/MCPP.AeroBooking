@@ -1,1 +1,44 @@
-<p>room works!</p>
+<h2>Rooms</h2>
+<hr>
+<button class="mb-3" mat-raised-button color="primary" [routerLink]="['/rooms/create']">Create New Room</button>
+
+<div class="position-relative">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Adress</th>
+        <th>Price</th>
+        <th>Number Of Occupants</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of rooms">
+        <td>{{ room.id }}</td>
+        <td>{{ room.name }}</td>
+        <td>{{ room.address }}</td>
+        <td>{{ room.price }}</td>
+        <td>{{ room.numberOfOccupants }}</td>
+        <td class="pb-0 mb-0">
+          <a class="me-2 text-info" [routerLink]="['/rooms/details', room.id]">
+            <mat-icon fontIcon="info_outline"></mat-icon>
+          </a>
+          <a class="me-2" [routerLink]="['/rooms/edit', room.id]">
+            <mat-icon fontIcon="edit"></mat-icon>
+          </a>
+          <a class="pointer text-danger" (click)="deleteRoom(room.id, room.name)">
+            <mat-icon fontIcon="delete"></mat-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spin-wrap" *ngIf="showSpinner">
+    <mat-spinner class="position-absolute top-50 start-50 translate-middle"></mat-spinner>
+  </div>
+
+</div>

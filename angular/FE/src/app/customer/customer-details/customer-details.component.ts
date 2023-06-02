@@ -14,7 +14,8 @@ export class CustomerDetailsComponent implements OnInit {
 
   customer?: Customer;
   gender = Gender;
-
+  email: any;
+  phone: any;
   constructor(
     private CustomerSvc: CustomerService,
     private activatedRoute: ActivatedRoute,

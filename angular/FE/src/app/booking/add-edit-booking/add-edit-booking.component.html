@@ -60,10 +60,10 @@
 
         <div class="">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Hotel</mat-label>
-              <mat-select formControlName="hotelId" (selectionChange)="updatePrice()">
-                <mat-option *ngFor="let hotel of hotelLookup" [value]="hotel.value">
-                  {{ hotel.text }}
+              <mat-label>Room</mat-label>
+              <mat-select formControlName="roomId" (selectionChange)="updatePrice()">
+                <mat-option *ngFor="let room of roomLookup" [value]="room.value">
+                  {{ room.text }}
                 </mat-option>
               </mat-select>
             </mat-form-field>

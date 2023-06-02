@@ -1,10 +1,15 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageMode } from 'app/enums/pageMode.enum';
 import { Booking } from 'app/models/booking/booking.model';
+import { Lookup } from 'app/models/lookup.model';
 import { BookingService } from 'app/services/booking.service';
 import { CustomerService } from 'app/services/customer.service';
+import { HotelService } from 'app/services/hotel.service';
+import { RoomService } from 'app/services/room.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-edit-booking',
@@ -22,14 +27,18 @@ export class AddEditBookingComponent implements OnInit {
     pageMode: PageMode = PageMode.Create;
     pageModeEnum = PageMode;
 
+    roomLookup!: Lookup[];
+    customerLookup!: Lookup[];
+
     totalPrice: number = 0;
+    RoomId!: number;
 
     constructor(
       private bookingSvc: BookingService,
       private activatedRoute: ActivatedRoute,
       private router: Router,
       private fb: FormBuilder,
-      private hotelSvc: HotelService,
+      private roomSvc: RoomService,
       private customerSvc: CustomerService
     ) { }
   
@@ -44,14 +53,14 @@ export class AddEditBookingComponent implements OnInit {
         this.loadBooking();
       }
   
-      this.loadHotelLookup();
+      this.loadRoomLookup();
       this.loadCustomerLookup();
   
     }
   
-    get hotelId(): number {
+    get roomId(): number {
   
-      return Number(this.bookingForm.controls['hotelId'].value);
+      return Number(this.bookingForm.controls['roomId'].value);
     }
   
     get bookingStart(): string {
@@ -72,7 +81,7 @@ export class AddEditBookingComponent implements OnInit {
   
         console.log("UpdatePrice Invoked");
   
-        this.bookingSvc.getBookingPrice(this.hotelId, this.bookingStart, this.bookingEnd).subscribe({
+        this.bookingSvc.getBookingPrice(this.roomId, this.bookingStart, this.bookingEnd).subscribe({
   
           next: (totalPriceFromApi: number) => {
             this.totalPrice = totalPriceFromApi;
@@ -132,27 +141,27 @@ export class AddEditBookingComponent implements OnInit {
         bookingStart: ['', Validators.required],
         bookingEnd: ['', Validators.required],
         numberOfOccupants: ['', Validators.required],
-        hotelId: ['', Validators.required],
+        roomId: ['', Validators.required],
         customerId: ['', Validators.required]
       });
     }
   
-    private loadHotelLookup() {
+    private loadRoomLookup() {
   
-      this.hotelSvc.getHotelLookup().subscribe({
-        next: (hotelLookupFromApi) => {
-          this.hotelLookup = hotelLookupFromApi;
+      this.roomSvc.getRoomLookup().subscribe({
+        next: (roomLookupFromApi) => {
+          this.roomLookup = roomLookupFromApi;
         }
       });
     }
   
     private loadCustomerLookup() {
-  
+
       this.customerSvc.getCustomerLookup().subscribe({
         next: (customerLookupFromApi) => {
           this.customerLookup = customerLookupFromApi;
         }
-      });
+      })
     }
   
     private loadBooking() {
@@ -163,18 +172,18 @@ export class AddEditBookingComponent implements OnInit {
           this.bookingForm.patchValue(bookingFromApi);
           this.updatePrice();
         },
-        error: (err: HttpErrorResponse) => {
-          console.log(err.message);
-        }
-      });
-    }
-  
-    private canUpdatePrice(): boolean {
-  
-      return this.RoomId != 0 && this.bookingStart != '' && this.bookingEnd != '';
-    }
-  
-    //#endregion
-  
+       error: (err: HttpErrorResponse) => {
+        console.log(err.message);
+      }
+    });
   }
+  
+  private canUpdatePrice(): boolean {
+  
+    return this.RoomId != 0 && this.bookingStart != '' && this.bookingEnd != '';
+  }
+  
+  //#endregion
+  
 }
+
