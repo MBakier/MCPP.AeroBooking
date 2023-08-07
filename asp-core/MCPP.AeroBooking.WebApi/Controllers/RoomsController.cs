@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
+using AutoMapper;
+using MCPP.AeroBooking.Dtos.Rooms;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -16,51 +18,70 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     {
         #region Data and Const
 
-        // Add AutoMapper here
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public RoomsController(ApplicationDbContext context)
+        public RoomsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
+
         #endregion
 
         #region Services
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<RoomListDto>>> GetRooms()
         {
-          if (_context.Rooms == null)
-          {
-              return NotFound();
-          }
-            return await _context.Rooms.ToListAsync();
+            var rooms = await _context.Rooms.ToListAsync();
+
+            var roomDtos = _mapper.Map<List<RoomListDto>>(rooms);
+
+            return roomDtos;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDetailsDto>> GetRoom(int id)
         {
-          if (_context.Rooms == null)
-          {
-              return NotFound();
-          }
-            var room = await _context.Rooms.FindAsync(id);
+          
+            var room = await _context
+                                 .Rooms
+                                 .SingleOrDefaultAsync(room => room.Id == id);
 
             if (room == null)
             {
                 return NotFound();
             }
 
-            return room;
+            var roomDto = _mapper.Map<RoomDetailsDto>(room);
+
+            return roomDto;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        [HttpPost]
+        public async Task<ActionResult> CreateRoom(RoomDto roomDto)
         {
-            if (id != room.Id)
+            var room = _mapper.Map<Room>(roomDto);
+            
+            _context.Rooms.Add(room);
+            await _context.SaveChangesAsync();
+
+            roomDto.Id = room.Id;
+
+            return CreatedAtAction("GetRoom", new { id = room.Id }, roomDto);
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditRoom(int id, RoomDto roomDto)
+        {
+            if (id != roomDto.Id)
             {
                 return BadRequest();
             }
 
+            var room = _mapper.Map<Room>(roomDto);
             _context.Entry(room).State = EntityState.Modified;
 
             try
@@ -82,27 +103,12 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
-        {
-          if (_context.Rooms == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Rooms'  is null.");
-          }
-            _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
-        }
-
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
-            if (_context.Rooms == null)
-            {
-                return NotFound();
-            }
             var room = await _context.Rooms.FindAsync(id);
+
             if (room == null)
             {
                 return NotFound();

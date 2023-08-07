@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
+using AutoMapper;
+using MCPP.AeroBooking.Dtos.Hotels;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -16,51 +18,84 @@ namespace MCPP.AeroBooking.WebApi.Controllers
     {
         #region Data and Const
 
-        // Add AutoMapper here
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public HotelsController(ApplicationDbContext context)
+
+        public HotelsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         #endregion
 
         #region Services
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelListDto>>> GetHotels()
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
-            return await _context.Hotels.ToListAsync();
+            var hotels = await _context.Hotels.ToListAsync();
+            var hotelDtos = _mapper.Map<List<HotelDto>>(hotels);
+
+            return hotelDtos;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDetailsDto>> GetHotel(int id)
         {
-          if (_context.Hotels == null)
+            var hotel = await _context
+                                 .Hotels
+                                 .Include(hotel => hotel.Rooms)
+                                 .SingleOrDefaultAsync(hotel => hotel.Id == id);
+
+          if (Hotel == null)
           {
               return NotFound();
           }
-            var hotel = await _context.Hotels.FindAsync(id);
+            var hotelDto = _mapper.Map<HotelDetailsDto>(hotel);
+
+            return hotelDto;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateHotel(HotelDto hotelDto)
+        {
+            var hotel = _mapper.Map<Hotel>(hotelDto);
+            
+            _context.Hotels.Add(hotel);
+            await _context.SaveChangesAsync();
+
+            hotelDto.Id = hotel.Id;
+
+            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotelDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<HotelDto>> GetEditHotel(int id)
+        {
+            var hotel = await _context
+                                .Hotels
+                                .Include(hotel => hotel.Rooms)
+                                .SingleOrDefaultAsync(hotel => hotel.Id == id);
 
             if (hotel == null)
             {
                 return NotFound();
             }
 
-            return hotel;
+            var hotelDto = _mapper.Map<HotelDto>(hotel);
+
+            return hotelDto;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<IActionResult> EditHotel(int id, HotelDto hotelDto)
         {
-            if (id != hotel.Id)
+            if (id != hotelDto.Id)
             {
                 return BadRequest();
             }
 
+            var hotel = _mapper.Map<Hotel>(hotelDto);
             _context.Entry(hotel).State = EntityState.Modified;
 
             try
@@ -82,27 +117,11 @@ namespace MCPP.AeroBooking.WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
-        {
-          if (_context.Hotels == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Hotels'  is null.");
-          }
-            _context.Hotels.Add(hotel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
-            if (_context.Hotels == null)
-            {
-                return NotFound();
-            }
             var hotel = await _context.Hotels.FindAsync(id);
+
             if (hotel == null)
             {
                 return NotFound();

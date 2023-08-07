@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MCPP.AeroBooking.EfCore;
 using MCPP.AeroBooking.Entities;
 using AutoMapper;
+using MCPP.AeroBooking.Dtos.Customers;
 
 namespace MCPP.AeroBooking.WebApi.Controllers
 {
@@ -31,37 +32,39 @@ namespace MCPP.AeroBooking.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
-            return await _context.Customers.ToListAsync();
+            var customers = await _context.Customers.ToListAsync();
+
+            var customerDtos = _mapper.Map<List<CustomerListDto>>(customers);
+
+            return customerDtos;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
-          if (_context.Customers == null)
-          {
-              return NotFound();
-          }
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context
+                                    .Customers
+                                    .SingleOrDefaultAsync(customer => customer.Id == id);
 
-            if (customer == null)
+            if (_context.Customers == null)
             {
-                return NotFound();
+              return NotFound();
             }
 
-            return customer;
+            var customerDto = _mapper.Map<CustomerDetailsDto>(customer);
+
+            return customerDto;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer)
+        public async Task<IActionResult> EditCustomer(int id, CustomerDto customerDto)
         {
-            if (id != customer.Id)
+            if (id != customerDto.Id)
             {
                 return BadRequest();
             }
+
+            var customer = _mapper.Map<Customer>(customerDto);
 
             _context.Entry(customer).State = EntityState.Modified;
 
@@ -85,12 +88,10 @@ namespace MCPP.AeroBooking.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<ActionResult> CreateCustomer(CustomerDto customerDto)
         {
-          if (_context.Customers == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Customers'  is null.");
-          }
+            var customer = _mapper.Map<Customer>(customerDto);
+
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
 
@@ -100,10 +101,6 @@ namespace MCPP.AeroBooking.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            if (_context.Customers == null)
-            {
-                return NotFound();
-            }
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
